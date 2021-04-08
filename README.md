@@ -1,14 +1,21 @@
 # tp3-ia
 
-A Clojure library designed to ... well, that part is up to you.
+Solution au TP3 d'IA, consistant à l'implémentation de l'algorithme Minimax.
+
+Cette version de l'algorithme utilise un élagage α-β.
+
+Écrits en Clojure.
 
 ## Usage
 
-FIXME
+Dans la racine se trouve le jar compilé, à lancer avec la commande
+```sh
+java -jar tp3-ia-meyer-theo.jar
+```
 
 ## License
 
-Copyright © 2021 FIXME
+Copyright © 2021 Théo MEYER <t.theomeyer@gmail.com>
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at

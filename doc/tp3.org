@@ -1,16 +1,24 @@
-#+title: Cours d'IA
-#+subtitle: TP3
+#+title: Explications sur mon TP3 d'IA
 #+language: fr
 #+author: Théo MEYER
 #+email: theo.meyer3@etu.univ-lorraine.fr
-#+date: 2021-03-27
+#+date: 2021-04-08
 #+options: num:t toc:nil \n:t
 #+latex_class: article
 #+latex_header: \setlength{\parindent}{0pt}
 
+* Minimax
+
+L'exercice demande d'appliquer l'algorithme Minimax sur l'arbre donné. J'ai recréé un arbre pour pouvoir visualiser le résultat.
+
+Ci-dessous le résultat de l'application de Minimax :
 
 #+begin_src dot :file min_max.png :cmd dot :cmdline -Tpng :exports none :results silent
 graph {
+    maxa [label="MAX", color=white];
+    minb [label="MIN", color=white];
+    maxc [label="MAX", color=white];
+    mind [label="MIN", color=white];
     a [label="2", shape=square];
     b1 [label="2"];
     b2 [label="0"];
@@ -60,6 +68,9 @@ graph {
     e26 [label="4", shape=square];
     e27 [label="1", shape=square];
 
+    maxa -- minb [style=invis];
+    minb -- maxc [style=invis];
+    maxc -- mind [style=invis];
     a -- {b1, b2};
     b1 -- {c1, c2, c3};
     b2 -- {c4, c5, c6};
@@ -85,6 +96,12 @@ graph {
 #+end_src
 [[file:min_max.png]]
 
+La fonction récursive Minimax est appelé *48* fois, ce qui est normal puisqu'il s'agit du nombre de nœuds dans l'arbre. Minimax calcule les valeurs de tous les nœuds.
+
+\pagebreak
+* Élagage \alpha-\beta
+
+Cette fois-ci, il est demandé d'appliquer l'algorithme Minimax sur l'arbre donné en utilisant un élagage \alpha-\beta. Les élagages \alpha sont en bleu, et les élagages \beta sont en gris.
 
 #+begin_src dot :file alpha_beta.png :cmd dot :cmdline -Tpng :exports none :results silent
 graph {
@@ -168,3 +185,19 @@ graph {
 }
 #+end_src
 [[file:alpha_beta.png]]
+
+La fonction récursive Minimax avec /élagage \alpha-\beta/ est appelé *22* fois sur cet arbre, ce qui correspond à moins de la moitié du nombre d'appels par rapport au Minimax classique. (Pour information, si on commençait dans l'arbre en /minimisant/, on trouve *29* appels de la fonction, ce qui est également beaucoup moins que le Minimax classique.)
+
+\pagebreak
+* Programmation
+Pour la partie programmation, j'ai également utilisé *Clojure*, comme pour mes TPs précédents.
+
+Encore une fois, *Clojure* étant un langage fonctionnel, je n'ai pas pu faire une application exacte des algorithmes donnés en cours, mais j'ai essayé de faire le plus fidèlement.
+J'ai implémenté l'algorithme Minimax sous la version classique, et sous la version avec élagage \alpha-\beta.
+
+Mes deux fonctions renvoient bien la valeur *2*, qui est la valeur correcte pour l'arbre donné.
+J'ai également prévu un moyen d'afficher le nombre d'appels récursifs à la fonction qui a été effectué, pour permettre de connaître le gain de performances en utilisant l'élagage \alpha-\beta.
+
+La verbosité est également choisie par l'utilisateur, s'il veut avoir une trace de l'exécution des algorithmes ou non.
+
+Le code du TP est disponible sur mon compte GitHub.
