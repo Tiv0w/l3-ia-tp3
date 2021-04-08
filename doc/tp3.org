@@ -1,0 +1,170 @@
+#+title: Cours d'IA
+#+subtitle: TP3
+#+language: fr
+#+author: Théo MEYER
+#+email: theo.meyer3@etu.univ-lorraine.fr
+#+date: 2021-03-27
+#+options: num:t toc:nil \n:t
+#+latex_class: article
+#+latex_header: \setlength{\parindent}{0pt}
+
+
+#+begin_src dot :file min_max.png :cmd dot :cmdline -Tpng :exports none :results silent
+graph {
+    a [label="2", shape=square];
+    b1 [label="2"];
+    b2 [label="0"];
+    c1 [label="3", shape=square];
+    c2 [label="2", shape=square];
+    c3 [label="7", shape=square];
+    c4 [label="0", shape=square];
+    c5 [label="3", shape=square];
+    c6 [label="3", shape=square];
+    d1 [label="3"];
+    d2 [label="1"];
+    d3 [label="2"];
+    d4 [label="4"];
+    d5 [label="7"];
+    d6 [label="2"];
+    d7 [label="0"];
+    d8 [label="3"];
+    d9 [label="0"];
+    d10 [label="2"];
+    d11 [label="3"];
+    d12 [label="1"];
+    e1 [label="4", shape=square];
+    e2 [label="3", shape=square];
+    e3 [label="8", shape=square];
+    e4 [label="2", shape=square];
+    e5 [label="1", shape=square];
+    e6 [label="4", shape=square];
+    e7 [label="2", shape=square];
+    e8 [label="3", shape=square];
+    e9 [label="6", shape=square];
+    e10 [label="4", shape=square];
+    e11 [label="7", shape=square];
+    e12 [label="5", shape=square];
+    e13 [label="2", shape=square];
+    e14 [label="1", shape=square];
+    e15 [label="9", shape=square];
+    e16 [label="0", shape=square];
+    e17 [label="4", shape=square];
+    e18 [label="3", shape=square];
+    e19 [label="0", shape=square];
+    e20 [label="2", shape=square];
+    e21 [label="8", shape=square];
+    e22 [label="4", shape=square];
+    e23 [label="3", shape=square];
+    e24 [label="7", shape=square];
+    e25 [label="5", shape=square];
+    e26 [label="4", shape=square];
+    e27 [label="1", shape=square];
+
+    a -- {b1, b2};
+    b1 -- {c1, c2, c3};
+    b2 -- {c4, c5, c6};
+    c1 -- {d1, d2};
+    c2 -- {d3};
+    c3 -- {d4, d5, d6};
+    c4 -- {d7};
+    c5 -- {d8, d9};
+    c6 -- {d10, d11, d12};
+    d1 -- {e1, e2, e3};
+    d2 -- {e4, e5};
+    d3 -- {e6, e7, e8};
+    d4 -- {e9, e10};
+    d5 -- {e11};
+    d6 -- {e12, e13};
+    d7 -- {e14, e15, e16};
+    d8 -- {e17, e18};
+    d9 -- {e19};
+    d10 -- {e20, e21, e22};
+    d11 -- {e23, e24};
+    d12 -- {e25, e26, e27};
+}
+#+end_src
+[[file:min_max.png]]
+
+
+#+begin_src dot :file alpha_beta.png :cmd dot :cmdline -Tpng :exports none :results silent
+graph {
+    maxa [label="MAX", color=white];
+    minb [label="MIN", color=white];
+    maxc [label="MAX", color=white];
+    mind [label="MIN", color=white];
+    a [label="2", shape=square];
+    b1 [label="2"];
+    b2 [label="≤1"];
+    c1 [label="3", shape=square];
+    c2 [label="2", shape=square];
+    c3 [label="≥4", shape=square];
+    c4 [label="≤1", shape=square];
+    c5 [label="", shape=square, fillcolor=grey, style=filled];
+    c6 [label="", shape=square, fillcolor=grey, style=filled];
+    d1 [label="3"];
+    d2 [label="≤2"];
+    d3 [label="2"];
+    d4 [label="4"];
+    d5 [label="", fillcolor=lightblue, style=filled];
+    d6 [label="", fillcolor=lightblue, style=filled];
+    d7 [label="≤1"];
+    d8 [label="", fillcolor=grey, style=filled];
+    d9 [label="", fillcolor=grey, style=filled];
+    d10 [label="", fillcolor=grey, style=filled];
+    d11 [label="", fillcolor=grey, style=filled];
+    d12 [label="", fillcolor=grey, style=filled];
+    e1 [label="4", shape=square];
+    e2 [label="3", shape=square];
+    e3 [label="8", shape=square];
+    e4 [label="2", shape=square];
+    e5 [label="", shape=square, fillcolor=grey, style=filled];
+    e6 [label="4", shape=square];
+    e7 [label="2", shape=square];
+    e8 [label="3", shape=square];
+    e9 [label="6", shape=square];
+    e10 [label="4", shape=square];
+    e11 [label="", shape=square, fillcolor=lightblue, style=filled];
+    e12 [label="", shape=square, fillcolor=lightblue, style=filled];
+    e13 [label="", shape=square, fillcolor=lightblue, style=filled];
+    e14 [label="1", shape=square];
+    e15 [label="", shape=square, fillcolor=grey, style=filled];
+    e16 [label="", shape=square, fillcolor=grey, style=filled];
+    e17 [label="", shape=square, fillcolor=grey, style=filled];
+    e18 [label="", shape=square, fillcolor=grey, style=filled];
+    e19 [label="", shape=square, fillcolor=grey, style=filled];
+    e20 [label="", shape=square, fillcolor=grey, style=filled];
+    e21 [label="", shape=square, fillcolor=grey, style=filled];
+    e22 [label="", shape=square, fillcolor=grey, style=filled];
+    e23 [label="", shape=square, fillcolor=grey, style=filled];
+    e24 [label="", shape=square, fillcolor=grey, style=filled];
+    e25 [label="", shape=square, fillcolor=grey, style=filled];
+    e26 [label="", shape=square, fillcolor=grey, style=filled];
+    e27 [label="", shape=square, fillcolor=grey, style=filled];
+
+    maxa -- minb [style=invis];
+    minb -- maxc [style=invis];
+    maxc -- mind [style=invis];
+    a -- {b1, b2};
+    b1 -- {c1, c2, c3};
+    b2 -- {c4, c5, c6};
+    c1 -- {d1, d2};
+    c2 -- {d3};
+    c3 -- {d4, d5, d6};
+    c4 -- {d7};
+    c5 -- {d8, d9};
+    c6 -- {d10, d11, d12};
+    d1 -- {e1, e2, e3};
+    d2 -- {e4, e5};
+    d3 -- {e6, e7, e8};
+    d4 -- {e9, e10};
+    d5 -- {e11};
+    d6 -- {e12, e13};
+    d7 -- {e14, e15, e16};
+    d8 -- {e17, e18};
+    d9 -- {e19};
+    d10 -- {e20, e21, e22};
+    d11 -- {e23, e24};
+    d12 -- {e25, e26, e27};
+}
+#+end_src
+[[file:alpha_beta.png]]
