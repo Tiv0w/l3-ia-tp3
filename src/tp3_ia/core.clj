@@ -1,4 +1,5 @@
-(ns tp3-ia.core)
+(ns tp3-ia.core
+  (:gen-class))
 
 (defonce problem [[[[4 3 8] [2 1]]
                    [[4 2 3]]
@@ -56,3 +57,24 @@
              (when (> @beta α)
                (recur (rest children)))))
          @min-eval)))))
+
+(defn solve-α-β-verbose []
+  (println "Minimax result is:" (α-β-pruning problem true true)
+           "\nThe function was called:" @α-β-pruning-call-count "times."))
+
+(defn solve-α-β []
+  (println "Minimax result is: " (α-β-pruning problem true)))
+
+(def usage
+  "Usage: java -jar tp3-ia [-nv]
+Options:
+  -nv, --no-verbose\tdon't print execution trace")
+
+(defn -main
+  [& args]
+  (case (first args)
+    "-nv" (solve-α-β)
+    "--no-verbose" (solve-α-β)
+    "-h" (println usage)
+    "--help" (println usage)
+    (solve-α-β-verbose)))
