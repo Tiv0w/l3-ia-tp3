@@ -6,6 +6,9 @@ Cette version de l'algorithme utilise un élagage α-β.
 
 Écrits en Clojure.
 
+Le rapport se trouve dans le dossier `doc/tp3.pdf`.
+https://github.com/Tiv0w/l3-ia-tp3/blob/master/doc/tp3.pdf
+
 ## Usage
 
 Dans la racine se trouve le jar compilé, à lancer avec la commande
