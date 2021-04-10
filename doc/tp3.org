@@ -201,3 +201,5 @@ J'ai également prévu un moyen d'afficher le nombre d'appels récursifs à la f
 La verbosité est également choisie par l'utilisateur, s'il veut avoir une trace de l'exécution des algorithmes ou non.
 
 Le code du TP est disponible sur mon compte GitHub.
+
+[[https://github.com/Tiv0w/l3-ia-tp3]]
